@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'eiffel_tower.dart';
+import 'palace_versailles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,8 +27,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       // home: const EiffelTower(),
+      home: PalaceVersailles(),
     );
   }
 }
