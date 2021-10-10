@@ -1,43 +1,45 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:mobile_mission_tic_flutter/models/poi.dart';
 
 class EiffelTower extends StatelessWidget {
-  const EiffelTower({Key? key}) : super(key: key);
+  EiffelTower({Key? key}) : super(key: key);
+
+  final POI currentPOI = Get.arguments["currentPOI"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Eiffel Tower"),
+        title: Text(currentPOI.name),
       ),
       body: Wrap(
         runSpacing: 20,
         children: [
-          const Image(image: AssetImage('lib/assets/tower_eiffel.png')),
+          Image(image: AssetImage('lib/assets/test/' + currentPOI.img + '.jpg')),
           Container(
             margin: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: Wrap(
               runSpacing: 10,
-              children: const [
+              children: [
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Eiffel Tower",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    currentPOI.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                     textScaleFactor: 2.0,
                   ),
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Ubicada en París, Francia, exactamente en Champ de Mars. Tiene 325 metros de altura y tres pisos únicamente. Fue construida durante 2 años para la Exposición Universal de París en 1889. Cuenta con 8 ascensores y 4 formas de acceso a través de sus patas.",
+                    currentPOI.detail,
                     textScaleFactor: 1.5,
                   ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );
