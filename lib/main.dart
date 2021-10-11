@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'eiffel_tower.dart';
 import 'poi_view.dart';
-import 'pois_lits_view.dart';
+import 'pois_list_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,15 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const POISListView(),
-        '/palacio_de_versalles': (context) => POIView(),
-        '/torre_eiffel': (context) => EiffelTower(),
-        '/puente_de_las_artes': (context) => POIView(),
-        '/museo_del_louvre': (context) => POIView(),
-        '/catedral_de_notre_dame': (context) => POIView(),
-      },
+      home: const POISListView(),
     );
   }
 }

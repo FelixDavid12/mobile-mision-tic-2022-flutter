@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_mission_tic_flutter/models/poi_list.dart';
+import 'package:mobile_mission_tic_flutter/poi_view.dart';
 import 'package:mobile_mission_tic_flutter/remote/api.dart';
 
 import 'package:get/get.dart';
@@ -63,12 +64,7 @@ Widget itemCard(POI cardContent, BuildContext context) {
     child: InkWell(
       splashColor: Colors.black.withAlpha(30),
       onTap: () {
-        Get.toNamed(
-            '/' + cardContent.name.toLowerCase().replaceAll(' ', '_'),
-            arguments: {
-              'currentPOI': cardContent
-            }
-        );
+        Get.to(() => POIView(), arguments: cardContent);
       },
       child: Column(
         children: [

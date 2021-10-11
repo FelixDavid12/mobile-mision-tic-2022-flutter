@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class POIView extends StatelessWidget {
   POIView({Key? key}) : super(key: key);
 
-  final POI currentPOI = Get.arguments["currentPOI"];
+  final POI currentPOI = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +24,6 @@ class POIView extends StatelessWidget {
         )
     );
   }
-
-
-
-
 }
 
 Widget infoPOI(POI currentPOI){
