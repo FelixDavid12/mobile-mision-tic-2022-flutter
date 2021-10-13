@@ -4,9 +4,18 @@
     <!-- Required to fetch data from the internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Required to get the GeoLocation. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
    <application
         android:label="mobile_mission_tic_flutter"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyC33UHctut24EFeLH_yOXjr9obgtvd7FtM"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

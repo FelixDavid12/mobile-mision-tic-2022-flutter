@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_mission_tic_flutter/models/poi.dart';
 import 'package:get/get.dart';
 
+import 'maps.dart';
+
 class POIView extends StatelessWidget {
   POIView({Key? key}) : super(key: key);
 
@@ -13,14 +15,20 @@ class POIView extends StatelessWidget {
         appBar: AppBar(
           title: Text(currentPOI.name)
         ),
-        body: ListView(
-          children: [
-            Image.asset('lib/assets/test/' + currentPOI.img + ".jpg", width: 400, height: 200, fit: BoxFit.cover),
-            galleryPOI(context),
-            infoPOI(currentPOI),
-            descriptionPOI(currentPOI),
-            mapPOI(currentPOI),
-          ],
+        body: SingleChildScrollView(
+          child: Wrap(
+            children: [
+              Image.asset('lib/assets/test/' + currentPOI.img + ".jpg", width: 400, height: 200, fit: BoxFit.cover),
+              galleryPOI(context),
+              infoPOI(currentPOI),
+              descriptionPOI(currentPOI),
+              SizedBox(
+                height: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width,
+                child: Maps(data: {"lat": currentPOI.lat, "lng": currentPOI.long, "markerId": currentPOI.name}),
+              )
+            ],
+          ),
         )
     );
   }
@@ -70,13 +78,6 @@ Widget descriptionPOI(POI currentPOI){
     child: Text(currentPOI.detail),
   );
 
-}
-
-Widget mapPOI(POI currentPOI){
-  return Container(
-    margin: const EdgeInsets.all(16),
-    child: Image.asset('lib/assets/' + currentPOI.img + ".jpg", width: 400, height: 200, fit: BoxFit.cover),
-  );
 }
 
 Widget galleryPOI(context){
