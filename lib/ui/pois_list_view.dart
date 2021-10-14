@@ -1,11 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_mission_tic_flutter/models/poi_list.dart';
-import 'package:mobile_mission_tic_flutter/poi_view.dart';
+import 'package:mobile_mission_tic_flutter/ui/poi_view.dart';
 import 'package:mobile_mission_tic_flutter/remote/api.dart';
 
 import 'package:get/get.dart';
+import 'package:mobile_mission_tic_flutter/ui/settings.dart';
+import 'package:mobile_mission_tic_flutter/widgets/info_poi.dart';
 
-import 'models/poi.dart';
+import '../models/poi.dart';
 
 class POISListView extends StatefulWidget {
   const POISListView({Key? key}) : super(key: key);
@@ -16,7 +19,6 @@ class POISListView extends StatefulWidget {
 
 class _POISListViewState extends State<POISListView> {
   late Future<POIList> futureList;
-
 
   @override
   void initState() {
@@ -29,33 +31,41 @@ class _POISListViewState extends State<POISListView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("POIS List View"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(const Settings());
+              },
+              icon: const Icon(Icons.settings))
+        ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: FutureBuilder(
-          future: futureList,
-          builder: (context, AsyncSnapshot<POIList> snapshot) {
-            if (snapshot.hasData) {
-              List<Widget> elements = <Widget>[];
-              snapshot.data!.pois.forEach((element) {
-                elements.add(itemCard(element, context));
-              });
-              return Wrap(
-                runSpacing: 10,
-                children: elements,
-              );
+      body: FutureBuilder(
+        future: futureList,
+        builder: (context, AsyncSnapshot<POIList> snapshot) {
+          if (snapshot.hasData) {
+            List<Widget> elements = <Widget>[];
+
+            for (var element in snapshot.data!.pois) {
+              elements.add(itemCard(element));
             }
 
-            return const CircularProgressIndicator();
-          },
-        ),
+            return OrientationBuilder(builder: (context, orientation) {
+              return GridView.count(
+                  crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
+                  children: elements);
+            });
+          }
+
+          return const CircularProgressIndicator();
+        },
       ),
     );
   }
 }
 
-Widget itemCard(POI cardContent, BuildContext context) {
+Widget itemCard(POI cardContent) {
   return Card(
+    margin: const EdgeInsets.all(10),
     elevation: 5.0,
     clipBehavior: Clip.antiAlias,
     shape: RoundedRectangleBorder(
@@ -79,21 +89,10 @@ Widget itemCard(POI cardContent, BuildContext context) {
             child: Wrap(
               runSpacing: 10,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    cardContent.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    textScaleFactor: 1.5,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    cardContent.detail,
-                    textScaleFactor: 1.0,
-                  ),
-                ),
+                InfoPOI(
+                    name: cardContent.name,
+                    location: cardContent.location,
+                    rating: cardContent.rating),
               ],
             ),
           ),

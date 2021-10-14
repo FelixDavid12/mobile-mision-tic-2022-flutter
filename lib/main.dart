@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'poi_view.dart';
-import 'pois_list_view.dart';
+import 'ui/poi_view.dart';
+import 'ui/pois_list_view.dart';
 
 void main() {
   runApp(const MyApp());

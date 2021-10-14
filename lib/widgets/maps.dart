@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'ask_location_permission.dart';
+import '../ask_location_permission.dart';
 
 class Maps extends StatefulWidget {
   final Map<String, dynamic> data;
