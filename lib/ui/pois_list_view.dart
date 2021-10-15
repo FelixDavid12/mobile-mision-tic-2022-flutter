@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:mobile_mission_tic_flutter/ui/settings.dart';
 import 'package:mobile_mission_tic_flutter/widgets/info_poi.dart';
 
-import '../models/poi.dart';
+import 'package:mobile_mission_tic_flutter/models/poi.dart';
 
 class POISListView extends StatefulWidget {
   const POISListView({Key? key}) : super(key: key);
@@ -49,11 +49,20 @@ class _POISListViewState extends State<POISListView> {
               elements.add(itemCard(element));
             }
 
-            return OrientationBuilder(builder: (context, orientation) {
+            if (MediaQuery.of(context).orientation == Orientation.landscape){
               return GridView.count(
-                  crossAxisCount: orientation == Orientation.portrait ? 1 : 2,
-                  children: elements);
-            });
+                crossAxisCount: 2,
+                children: elements,
+              );
+            }
+            else{
+              return SingleChildScrollView(
+                child: Wrap(
+                  runSpacing: 10,
+                  children: elements,
+                )
+              );
+            }
           }
 
           return const CircularProgressIndicator();
@@ -92,7 +101,8 @@ Widget itemCard(POI cardContent) {
                 InfoPOI(
                     name: cardContent.name,
                     location: cardContent.location,
-                    rating: cardContent.rating),
+                    rating: cardContent.rating
+                ),
               ],
             ),
           ),
