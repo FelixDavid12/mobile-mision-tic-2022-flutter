@@ -88,9 +88,7 @@ Widget itemCard(POI cardContent) {
       child: Column(
         children: [
           Image(
-            image: cardContent.img != 'louvre11'
-                ? AssetImage("lib/assets/test/" + cardContent.img + ".jpg")
-                : const AssetImage("lib/assets/test/tower_eiffel.jpg"),
+            image: AssetImage("lib/assets/" + cardContent.img + ".jpg"),
             fit: BoxFit.fill,
           ),
           Container(

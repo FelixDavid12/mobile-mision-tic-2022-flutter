@@ -15,10 +15,10 @@ class POIView extends StatelessWidget {
     Widget galleryPOIs = Container(
       margin: const EdgeInsets.only(bottom: 16),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        _imageGallery('lib/assets/versailles_0.jpg', context),
-        _imageGallery('lib/assets/versailles_1.jpg', context),
-        _imageGallery('lib/assets/versailles_2.jpg', context),
-        _imageGallery('lib/assets/versailles_3.jpg', context),
+        _imageGallery('lib/assets/' + currentPOI.gallery[0] +  '.jpg', context),
+        _imageGallery('lib/assets/' + currentPOI.gallery[1] +  '.jpg', context),
+        _imageGallery('lib/assets/' + currentPOI.gallery[2] +  '.jpg', context),
+        _imageGallery('lib/assets/' + currentPOI.gallery[3] +  '.jpg', context),
       ]),
     );
 
@@ -33,7 +33,7 @@ class POIView extends StatelessWidget {
         appBar: AppBar(title: Text(currentPOI.name)),
         body: ListView(
           children: [
-            Image.asset('lib/assets/test/' + currentPOI.img + ".jpg",
+            Image.asset('lib/assets/' + currentPOI.img + ".jpg",
                 width: double.infinity, height: 200, fit: BoxFit.cover),
             Container(
               margin: const EdgeInsets.all(16),
