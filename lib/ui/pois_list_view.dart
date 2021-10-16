@@ -90,6 +90,7 @@ Widget itemCard(POI cardContent) {
           Image(
             image: AssetImage("lib/assets/" + cardContent.img + ".jpg"),
             fit: BoxFit.fill,
+            height: 225,
           ),
           Container(
             margin: const EdgeInsets.all(20.0),

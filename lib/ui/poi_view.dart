@@ -12,14 +12,15 @@ class POIView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     Widget galleryPOIs = Container(
       margin: const EdgeInsets.only(bottom: 16),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        _imageGallery('lib/assets/' + currentPOI.gallery[0] +  '.jpg', context),
-        _imageGallery('lib/assets/' + currentPOI.gallery[1] +  '.jpg', context),
-        _imageGallery('lib/assets/' + currentPOI.gallery[2] +  '.jpg', context),
-        _imageGallery('lib/assets/' + currentPOI.gallery[3] +  '.jpg', context),
-      ]),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: generateImagesWidgets(currentPOI.gallery, context)
+      ),
     );
 
     Widget descriptionPOI(POI currentPOI) {
@@ -31,35 +32,44 @@ class POIView extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(title: Text(currentPOI.name)),
-        body: ListView(
+        body: Flex(
+          direction: isLandscape ? Axis.horizontal : Axis.vertical,
           children: [
             Image.asset('lib/assets/' + currentPOI.img + ".jpg",
-                width: double.infinity, height: 200, fit: BoxFit.cover),
-            Container(
-              margin: const EdgeInsets.all(16),
-              child: Wrap(
-                runSpacing: 10,
-                children: [
-                  galleryPOIs,
-                  InfoPOI(
-                      name: currentPOI.name,
-                      location: currentPOI.location,
-                      rating: currentPOI.rating),
-                  descriptionPOI(currentPOI),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width / 2,
-                    width: MediaQuery.of(context).size.width,
-                    child: Maps(data: {
-                      "lat": currentPOI.lat,
-                      "lng": currentPOI.long,
-                      "markerId": currentPOI.name
-                    }),
-                  )
-                ],
-              ),
+                width: isLandscape ? 200 : double.infinity,
+                height: isLandscape ? double.infinity : 200,
+                fit: BoxFit.cover
             ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  margin: const EdgeInsets.all(16),
+                  child: Wrap(
+                    runSpacing: 10,
+                    children: [
+                      galleryPOIs,
+                      InfoPOI(
+                          name: currentPOI.name,
+                          location: currentPOI.location,
+                          rating: currentPOI.rating),
+                      descriptionPOI(currentPOI),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.width / 2,
+                        width: MediaQuery.of(context).size.width,
+                        child: Maps(data: {
+                          "lat": currentPOI.lat,
+                          "lng": currentPOI.long,
+                          "markerId": currentPOI.name
+                        }),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
-        ));
+        )
+    );
   }
 }
 
@@ -70,8 +80,8 @@ Flexible _imageGallery(String urlImg, context) {
   return Flexible(
       flex: 1,
       child: Container(
-        height: isLandscape ? 100 : 50,
-        margin: const EdgeInsets.only(right: 5.0),
+        height: isLandscape ? 80 : 50,
+        width: isLandscape ? 100 : 60,
         decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(urlImg),
@@ -81,39 +91,8 @@ Flexible _imageGallery(String urlImg, context) {
       ));
 }
 
-/*Widget galleryPOI(context){
-  bool isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
-
-  return Container(
-    height: isLandscape ? 100 : 60,
-    margin: const EdgeInsets.only(bottom: 16),
-    child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-        Flexible(
-        flex: 1,
-        child: Container(
-          height: 50,
-          margin: const EdgeInsets.only(right: 5.0),
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/assets/versailles_1.jpg'),
-                fit: BoxFit.fitHeight,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(5))),
-        )
-    ),
-          Expanded(
-            child: Image.asset('lib/assets/versailles_1.jpg', fit: BoxFit.fill),
-          ),
-          Expanded(
-            child: Image.asset('lib/assets/versailles_2.jpg', fit: BoxFit.fill),
-          ),
-          Expanded(
-            child: Image.asset('lib/assets/versailles_3.jpg', fit: BoxFit.fill),
-          ),
-        ]
-    ),
-  );
-}*/
+List<Widget> generateImagesWidgets(List<dynamic> gallery, BuildContext context){
+  return gallery.map((e) {
+    return _imageGallery('lib/assets/' + e +  '.jpg', context);
+  }).toList();
+}
